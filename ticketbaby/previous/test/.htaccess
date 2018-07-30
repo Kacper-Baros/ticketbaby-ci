@@ -1,0 +1,10 @@
+#Redirect 301 /hp http://ticketbaby.co.uk/index.php/event/hp
+#Redirect 301 /mvsa http://ticketbaby.co.uk/index.php/event/movie-video-and-screen-awards
+#Redirect 301 /summerball http://ticketbaby.co.uk/index.php/event/rick-clarke-birthday-summer-ball
+#Redirect 301 /caribbean http://ticketbaby.co.uk/index.php/event/caribbean
+#Options +FollowSymLinks
+#RewriteEngine on
+#RewriteCond %{HTTP_HOST} .
+#RewriteCond %{HTTP_HOST} !^ticketbaby\.co.uk
+#RewriteRule (.*) http://ticketbaby.co.uk/$1 [R=301,L]
+

@@ -1,0 +1,147 @@
+
+<?php $this->load->helper('url');?>
+<div class="container-fluid content-bg">
+  <div class="container content">
+    
+    <div class="col-xs-12 line2"></div>
+
+<form class="form-horizontal" name="form" id="" method="POST" action="<?php echo base_url();?>index.php/user/edit_user_detail">   
+      
+        <div class="row no-mar main-content">
+           
+               
+                  <?php 
+				
+				  if($this->session->flashdata('error')) { ?>                    
+                        <p style="color:red">
+                            <?php echo $this->session->flashdata('error');?>
+                        </p>                   
+                    <?php } 
+					 elseif($this->session->flashdata('success')) { ?>                    
+                        <p style="color:green">
+                            <?php echo $this->session->flashdata('success');?>
+                        </p>                   
+                    <?php }?>
+
+                
+
+                  <div class="col-md-6 col-xs-8 text-right">
+                  <h1>Order details</h1>
+            </div>
+			<div class="col-xs-12 bgGray"><br/>
+                        
+                       
+		<div class="billing-details"> 
+		<div class="form-group cus-form">
+		<div class="col-xs-12">
+		<label class="col-md-3 col-xs-12">First Name</label>
+		<div class="col-md-4 col-xs-12 col-md-pull-1">
+		<input type="hidden" name="user_ids" value="<?php echo $id;?>">
+		<input  type="text" class="form-control-register" name="first_name" value="<?php echo $first_name;?>"readonly />     
+		</div><br/><Br/>
+		</div>
+		<div class="col-xs-12">
+		  <label class="col-md-3 col-xs-12">Last Name</label>
+		  <div class="col-md-4 col-xs-12 col-md-pull-1">
+		  <input autocomplete="off" type="text" class="form-control-register" value="<?php echo $last_name;?>"name="last_name" readonly />
+		  </div><br/><Br/>
+	</div>
+	<div class="col-xs-12">
+		  <label class="col-md-3 col-xs-12">Email</label>
+		  <div class="col-md-4 col-xs-12 col-md-pull-1">
+		  <input autocomplete="off" type="email" class="form-control-register"value="<?php echo $email;?>" name="email" readonly />
+		  </div><br/><Br/>
+	</div>
+	<div class="col-xs-12">
+		  <label class="col-md-3 col-xs-12">Address</label>
+		  <div class="col-md-4 col-xs-12 col-md-pull-1">
+		  <input autocomplete="off" type="text" class="form-control-register" value="<?php echo $address;?>"name="address"  readonly />
+		  </div><br/><Br/>
+	</div>
+	<div class="col-xs-12">
+		  <label class="col-md-3 col-xs-12">venue</label>
+		  <div class="col-md-4 col-xs-12 col-md-pull-1">
+			<input autocomplete="off" type="text" class="form-control-register" value="<?php echo $venue;?>"name="area"readonly  />
+		  </div><br/><Br/>
+	</div>
+	<div class="col-xs-12">
+		  <label class="col-md-3 col-xs-12">Area</label>
+		  <div class="col-md-4 col-xs-12 col-md-pull-1">
+			<input autocomplete="off" type="text" class="form-control-register" value="<?php echo $area;?>"name="area"readonly  />
+		  </div><br/><Br/>
+	</div>
+	<div class="col-xs-12">
+		  <label class="col-md-3 col-xs-12">City</label>
+		  <div class="col-md-4 col-xs-12 col-md-pull-1">
+			<input autocomplete="off" type="text" class="form-control-register" value="<?php echo $city;?>"name="city"readonly />
+
+		  </div><br/><Br/>
+	</div>
+	<div class="col-xs-12">
+		  <label class="col-md-3 col-xs-12">Postcode</label>
+		  <div class="col-md-4 col-xs-12 col-md-pull-1">
+		  <input autocomplete="off" type="text" class="form-control-register"value="<?php echo $post_code;?>" name="post_code" readonly />
+		  </div><br/><Br/>
+	</div>
+	<div class="col-xs-12 ">
+		  <label class="col-md-3 col-xs-12">Date</label>
+		  <div class="col-md-4 col-xs-12 col-md-pull-1">
+		  <input autocomplete="off" type="text" class="form-control-register "value="<?php echo $date;?>" name="country" readonly />
+		  </div>
+		 
+		  <br/><Br/>
+	</div>
+
+	<div class="col-xs-12">
+		  <label class="col-md-3 col-xs-12">Mobile Phone</label>
+		  <div class="col-md-4 col-xs-12 col-md-pull-1">
+		  <input  type="text" class="form-control-register" value="<?php echo $mobile_number;?>"name="contact_number" readonly />
+
+		  </div>
+		
+		  <br/><Br/>
+	</div>
+    	<div class="col-xs-12">
+		  <label class="col-md-3 col-xs-12">Event title</label>
+		  <div class="col-md-4 col-xs-12 col-md-pull-1">
+		  <input  type="text" class="form-control-register" value="<?php echo $title;?>"name="contact_number" readonly />
+
+		  </div>
+		
+		  <br/><Br/>
+	</div>
+        	<div class="col-xs-12">
+		  <label class="col-md-3 col-xs-12">Total Amount</label>
+		  <div class="col-md-4 col-xs-12 col-md-pull-1">
+		  <input  type="text" class="form-control-register" value="<?php echo $total_amount;?>"name="contact_number" readonly />
+
+		  </div>
+		
+		  <br/><Br/>
+	</div>
+    
+          
+	
+            
+	<div class="col-xs-12">
+		
+		
+		 	  <div class="col-md-0 col-xs-12 ">
+		  </br>
+		 <a href="<?php echo base_url();?>index.php/cart/home"><input class="btn btn-danger btn-red btn-lg" value="Back"></a><br/>
+
+		  </div>
+		 
+		  
+		  <br/><br/>
+	</div>
+                              </div>
+                      </div>
+                  </div>
+               
+                
+        </div>
+        
+        </form>
+    </div> <!-- container ends -->
+</div> <!-- Main div ends -->

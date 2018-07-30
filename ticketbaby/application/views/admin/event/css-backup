@@ -1,0 +1,105 @@
+/* New CSS Event Listing */
+#listevents{
+	margin-left: -30px;
+	/*overflow: auto;
+	height: 694px;*/
+}
+
+.owl-items {
+	float:left;
+	width:200px;
+	margin-bottom: 16px;
+	list-style-type:none;
+	margin-right: 8px;
+}
+
+li.item-child{
+	clear:left;
+}
+
+.owl-items .item {
+	margin:3px 5px;	
+	border: thin #e0ded3 solid;
+}
+
+.event_detail_s {
+    background: #fff none repeat scroll 0 0;
+    min-height: 372px;
+	max-height: 372px;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+.image {
+    position: relative;
+}
+
+.owl-items .item img {
+    display: block;
+    max-height: 167px;
+    min-height: 167px;
+    width: 100%;
+}
+
+.event_detail_s h4 {
+	font-family: inherit;
+	color:#202020;
+	font-size: 12px !important;
+	margin-bottom: 0 !important;
+	margin-top: 16px !important;
+	padding-left: 6px !important;
+	padding-right: 0 !important;
+	font-weight: 600;
+}
+
+.event_detail_s p {
+	bottom: 0 !important;
+	top: 8px !important;
+	color: #747475 !important;
+	font-size: 12px !important;
+	left: 0  !important;
+	position: relative !important;
+}
+
+.event_detail_s p {
+	font-family: inherit;
+	color: #757575;
+	margin-bottom: 20px;
+	padding-left: 15px;
+	padding-right: 15px;
+	text-align: justified;
+}
+.Event-List-Button {
+    text-align: center;
+    padding: 0;
+    /*margin: 0 15%;*/
+	margin: -10px -5%;
+    position: absolute;
+    bottom: 0;
+}
+.get_ticket_btn_E {
+  left: 22%;
+}
+.get_ticket_btn_E {
+  background: #ff8734 none repeat scroll 0 0;
+  border: medium none;
+  border-radius: 4px;
+  bottom: 20px;
+  box-shadow: 2px 2px 4px #ccc;
+  color: white;
+  position: relative;
+  cursor:pointer;
+  padding: 4px 8px;
+}
+.sold_ticket_btn {
+  bottom: 20px;
+  color: #ab35ea;
+  left: 22%;
+  position: relative;
+}
+.share-save{
+	float:right;padding-top: 32px;margin-right: 10px;
+}
+.wrap-tickbtn-sharebtn{
+	width: 100%;padding: 0px;border-top: thin #e0ded3 solid;
+}

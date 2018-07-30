@@ -1,0 +1,104 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Event extends CI_Controller {
+
+        public function __construct()
+        {
+                parent::__construct();
+                $this->load->model('event_model');
+        }
+
+        public function index()
+        {
+               redirect(base_url()); // todo
+        }
+
+        public function view($slug = 'Event')
+        {
+              
+                $siteKey                =   $this->config->item('recaptcha_site_key');
+                $data['event']          =   $this->event_model->get_event($slug);
+				$cart_session			=	$this->session->userdata('cart_session'); 
+				$cart_event 			= 	$this->session->userdata('cart_event');		 
+				$array_store_cart		=	array();
+				
+				foreach($cart_session as $_cart_session){
+					$selected_tables				=	$_cart_session['selected_tables'];
+					$array_store_cart[$_cart_session['ticket_class_id']]['ticket_class_id_s']		=	$_cart_session['ticket_class_id'];
+					$array_store_cart[$_cart_session['ticket_class_id']]['seat_quantity']			=	$selected_tables[0]['seat_quantity'];
+					
+				}
+				$data['array_store_cart']	=	$array_store_cart;
+				
+				//print_r($array_store_cart);die('test');
+				
+                if ( !isset($data['event']) || !isset($data['event']['id']) ) {
+                        redirect(base_url());
+                }
+                
+                 $data['event_seats']            = $this->event_model->get_event_seats($data['event']['id']);
+                $data['show_left_panel_cart']   = 'TRUE';
+                $data['siteKey']                = $siteKey;
+                $data["cart_captcha_session"] = $this->session->userdata('cart_captcha_session'); 
+                $data['current_view']           = 'EVENTDETAIL';
+
+
+                /* Update session cart */
+                $cart_event = $this->session->userdata('cart_event');
+                if ( $cart_event["id"] != $data['event']["id"]) {
+                    $this->session->unset_userdata('cart_session');
+                    $this->session->unset_userdata('cart_additional_session');   
+                    $this->session->unset_userdata('cart_captcha_session');
+                    $this->session->unset_userdata('cart_user_session');
+                }
+                $this->session->set_userdata('cart_event', $data['event']);
+
+
+                $array = array();
+                foreach($data['event_seats']  as $k=>$row) {
+				$occupied_seat_numbers = $this->event_model->get_event_seats_booked ($row['event_id'], $row['ticket_class_id']);
+                $data['event_seats'][$k]['occupied_seat_numbers'] = $occupied_seat_numbers;
+                $missing_seat_numbers  = $this->event_model->get_event_missing_seats($row['event_id'], $row['ticket_class_id']);
+                $data['event_seats'][$k]['missing_seat_numbers']  = $missing_seat_numbers;
+                }
+                $this->load->view('templates/header', $data);
+
+
+                if ( intval($data['event']['category_id']) <= 1 ) {
+				
+				if ($slug=='movie-video-and-screen-awards'){
+				  $this->load->view('event/event_detail', $data);
+				  }
+				  		  
+				  if ($slug=='club-nite')
+					{
+					$this->load->view('event/event_detail_club_nite', $data);
+					}
+					if ($slug=='southport-family-day-trip')
+					{
+					$this->load->view('event/event_detail_family_trips', $data);
+					}
+					
+					
+                }else{
+                    echo 'event_detail_' . $data['event']['category_slug'];
+					$this->load->view('event/event_detail_' . $data['event']['category_slug'], $data);
+                }
+                
+                $this->load->view('templates/footer', $data);
+        }
+		// Search event method start
+		public function search_event() {
+			$response_detail = $this->event_model->search_event();
+			//print_r($response_detail);die('test');	
+			$data['show_left_panel_cart'] 	= 'TRUE';
+			$data['current_view'] 			= 'HOME';
+
+			$data['home_page_event_list'] 	= $response_detail;
+			$data['q'] 	= $this->input->get('q');
+			$this->load->view('templates/header', $data);
+			$this->load->view('event/search', $data);
+			$this->load->view('templates/footer', $data);	
+		}
+}

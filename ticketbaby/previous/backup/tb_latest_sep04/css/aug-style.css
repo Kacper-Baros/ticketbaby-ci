@@ -1,0 +1,30 @@
+body{background:url(../images/content-bg.png)}
+.bg-ar{background:rgba(0, 0, 0, 0) linear-gradient(to bottom, #1e5799 0px, #ff9e5b 0px, #ff8531 100%, #207cca 100%) repeat scroll 0 0;}
+.bg-ar a{color:#fff;}
+.login-container{
+    position: relative;
+    padding: 20px 40px 40px;
+    border: 1px dashed #FF9D59;
+	z-index:99;
+	background:#FF8532;
+}
+.login-container::before,.login-container::after{
+    content: "";
+    position: absolute;
+    width: 100%;height: 100%;
+    top: 3.5px;left: 0;
+    z-index: -1;
+    -webkit-transform: rotateZ(5deg);
+    -moz-transform: rotateZ(5deg);
+    -ms-transform: rotateZ(5deg);
+    border: 1px dashed #FFD1B2;
+	background:#FF9D59;
+}
+.login-container::after{
+    top: 5px;
+    z-index: -2;
+    -webkit-transform: rotateZ(-4deg);
+     -moz-transform: rotateZ(-4deg);
+      -ms-transform: rotateZ(-4deg);
+}
+.input-group input:focus{box-shadow:0 0 0;border-left:3px solid #FF8532;}

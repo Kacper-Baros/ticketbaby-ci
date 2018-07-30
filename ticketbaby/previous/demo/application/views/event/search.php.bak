@@ -1,0 +1,29 @@
+<style>
+.main_div div{
+	float:left;
+	padding:15px;
+}
+</style>
+<div class="container-fluid content-bg">
+    <div class="container content">
+        <div class="row no-mar main-content">
+        <div class="main_div">
+            <?php
+                foreach ($home_page_event_list as $event_item):
+                    if($event_item['show_main_carousel'] == "Y") { 
+            ?>
+                <?php if ( $event_item['ticketseatrows'] > 0 ) { ?>
+                <div class="item"><a href="<?=base_url()?>index.php/event/<?php echo $event_item['slug'] ?>"><img src="<?=base_url()?>assets/upload/event/thumb/<?php echo $event_item['thumb1_main_carousel'] ?>" class="img-responsive" alt=""/></a></div>          
+                <?php }else{ ?>
+                <div class="item"><img src="<?=base_url()?>assets/upload/event/thumb/<?php echo $event_item['thumb1_main_carousel'] ?>" class="img-responsive" alt=""/></div>
+                <?php } ?>
+            <?php
+                }
+                endforeach;
+            ?>
+       
+        </div>
+        </div>
+    </div>  
+</div>
+  

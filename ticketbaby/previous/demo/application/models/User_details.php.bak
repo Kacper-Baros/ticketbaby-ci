@@ -1,0 +1,270 @@
+<?php
+class User_details extends CI_Model {
+	protected $_table_name = 'user_details';
+	protected $_table_names = 'user_master';
+	protected $_table_order = 'order_master';
+	
+        public function __construct()
+        {
+                $this->load->database();
+        }
+	
+	
+   /*
+	** change password
+	*/  
+	public function confirm_password()
+	{	
+		$email 			=	$this->input->post('email');
+		$old_password 	=	md5($this->input->post('old_password'));
+		$password		=	md5($this->input->post('password'));
+		$conf_password	=	md5($this->input->post('con_password'));
+		
+		$change_data=array
+		(
+		'password' => $conf_password
+		);
+	
+	if ($password==$conf_password)
+	{
+		$this->db->where("email = '{$email}' and password = '{$old_password}' and status = '1'");
+		$this->db->update('user_master', $change_data); 
+		$query = $this->db->get($this->_table_name);
+		$user	=	$query->row_array();
+
+	}	
+		if(count($user)){
+			//get existing user detail
+			$data = array(
+				'first_name' 	=> $user['first_name'],
+				'last_name' 	=> $user['last_name'],
+				'id' 			=> $user['id'],
+				'loggedin' 		=> TRUE,
+				'status' 		=> $user['status'],
+				'email'			=> $user['email'],
+				'loggedin_time'	=> time()
+				);
+			//$this->session->set_userdata('user_cart', serialize($data));
+			return true;
+		}
+	}
+	
+	/*
+	** Check  login 
+	*/
+	public function login()
+	{	
+		$password	=	md5($this->input->post('password'));
+		$email 		=	$this->input->post('email');
+		$this->db->where("email = '{$email}' and password = '{$password}' and active = 'Y'");
+		$query = $this->db->get($this->_table_names);
+		$user	=	$query->row_array();
+		
+		if(count($user)){
+			//User Exists Logg in detail
+			$login_data = array(
+				'id' 			=> $user['id'],
+				'first_name' 	=> $user['first_name'],
+				'last_name' 	=> $user['last_name'],
+				'email'			=> $user['email'],
+				'address'		=> $user['address'],
+				'state'		    => $user['state'],
+				'city'		    => $user['city'],
+				'country'		=> $user['country'],
+				'zip'			=> $user['zip'],
+				'loggedin' 		=> TRUE,
+				'loggedin_time'	=> time()
+				
+				);
+			
+			$this->session->set_userdata('user_cart', serialize($login_data));
+			return true;
+		}
+	}
+		
+		/***
+		user order details
+		****/
+		public function order_detail() 
+		{
+		
+			echo $id					   = $this->input->post('user_ids');
+			die('test');
+			$this->db->where('id',$user_ids);
+			$this->db->select('*'); 
+			$query = $this->db->get($this->_table_order);
+			$user	=	$query->row_array();
+		
+			if(count($userDetail)){
+			
+			$data = array(
+				
+				'pay_id' 		=> $userDetail['pay_id'],
+				'first_name' 	=> $userDetail['first_name'],
+				'last_name' 	=> $userDetail['last_name'],
+				'email'			=> $userDetail['email'],
+				'address'		=> $userDetail['address'],
+				'area'		    => $userDetail['area'],
+				'city'		    => $userDetail['city'],
+				'post_code'		=> $userDetail['post_code'],
+				'country'		=> $userDetail['country'],
+				'phone'		    => $userDetail['mobile_number'],
+				'total_amount'	=> $userDetail['total_amount'],
+				'loggedin' 		=> TRUE,
+				'status' 		=> $userDetail['status'],
+				'loggedin_time'	=> time()
+				);
+			$this->session->set_userdata('user_order', serialize($data));
+			return true;
+		}
+		}
+				
+		/***
+		update user details
+		****/
+		public function updateUser() 
+		{		
+				$id					   = $this->input->post('user_ids');
+				$first_name            = $this->input->post('first_name');
+				$last_name      	   = $this->input->post('last_name');
+				$email      		   = $this->input->post('email');
+				$address      		   = $this->input->post('address');
+				$state      		   = $this->input->post('state');
+				$city      		       = $this->input->post('city');
+				$zip   			   	   = $this->input->post('zip');
+				$country      		   = $this->input->post('country');
+				
+			$user_detail = array(
+		    'first_name'           =>  trim($first_name),
+			'last_name'      	   =>  trim($last_name),
+            'email'      		   =>  trim($email),
+            'address'      		   =>  trim($address),
+            'state'     		   =>  trim($state),
+            'city'      		   =>  trim($city),
+            'zip'      	 		   =>  trim($zip),
+            'country'      		   =>  trim($country)
+            
+            );
+		
+		$this->db->where('id',$id);
+		$this->db->update('user_master', $user_detail); 
+		$query			 = $this->db->get($this->_table_names);
+		$userDetail 	 =	$query->row_array();
+		
+			if(count($userDetail)){
+			
+			$data = array(
+				
+				'first_name' 	=> $userDetail['first_name'],
+				'last_name' 	=> $userDetail['last_name'],
+				'email'			=> $userDetail['email'],
+				'address'		=> $userDetail['address'],
+				'state'		    => $userDetail['state'],
+				'city'		    => $userDetail['city'],
+				'zip'			=> $userDetail['zip'],
+				'country'		=> $userDetail['country'],
+				'loggedin' 		=> TRUE,
+				'status' 		=> $userDetail['status'],
+				'loggedin_time'	=> time()
+				);
+			//$this->session->set_userdata('user_cart', serialize($data));
+			return true;
+		}
+		}
+			
+		/*
+		** Function for Checking a User is logged in or Not
+		*/
+		
+		public function loggedin()
+		{
+			$sess = $this->session->userdata('user_cart');
+			$ar = unserialize($sess);
+			return (bool) $ar['loggedin'];
+		}
+		
+		public function get_user_by_username($username = FALSE)
+		{
+				if ($username === FALSE)
+				{
+						$query = $this->db->get('user_details');
+						return $query->result_array();
+				}
+
+				$query = $this->db->get_where('user_details', array('username' => $username));
+				return $query->row_array();
+		}
+			
+		public function registerUserNew($data) 
+		{
+
+				$first_name            =  trim($data['first_name']);
+				$last_name      	   =  trim($data['last_name']);
+				$email      		   =  trim($data['email']);
+				$address      		   =  trim($data['address']);
+				$area      		       =  trim($data['area']);
+				$city      		       =  trim($data['city']);
+				$post_code      	   =  trim($data['post_code']);
+				$country      		   =  trim($data['country']);
+				$mobile_number         =  trim($data['mobile_number']);
+				$password        	   =  trim($data['password']);
+
+				$new_user_data = array(
+					'first_name'	 => $first_name,
+					'last_name'		 => $last_name,
+					'email'			 => $email,
+					'address' 		 => $address,
+					'area' 			 => $area,
+					'city' 			 => $city,
+					'postcode'		 => $post_code,
+					'country' 		 => $country,
+					'phone' 		 => $mobile_number,
+					'password'		 => MD5($password),
+					'status' 		 => '1'
+					
+					);
+
+					$this->db->insert($this->_table_name, $new_user_data); 
+					return $user_id = $this->db->insert_id();
+		}	
+				
+		/*
+		Backend
+		*/
+		public function get_user_by_id($user_id = 0)
+		{
+				if ( $user_id > 0 )
+				{
+					$query = $this->db->get_where('user_details', array('id' => $user_id));
+					return $query->row_array();
+				}else{
+					return FALSE;
+				}	
+		}
+
+		public function record_count() 
+		{
+			return $this->db->count_all("user_details");
+		}
+
+		public function get_users($username = FALSE,$limit,$start)
+		{
+				$this->db->limit($limit, $start);
+				if ($username === FALSE)
+				{
+						$this->db->where('user_details.id_admin', '0');
+						$query = $this->db->get('user_details');       
+						return $query->result_array();
+				}
+				$query = $this->db->get_where($this->_table_name, array('username' => $username));
+				return $query->row_array();
+		}
+
+		public function createUpdateUser($data) 
+		{
+				print_r($data);
+				exit;
+		}
+
+
+}
